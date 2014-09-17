@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# RPMForge install script
+# Script to install and enable the latest RPMForge version for your RHEL/CentOS version and 
+architecture.
+# Author: Richard Reijmers
 
 # Some variables
 RPMFORGEREPOFILE="/etc/yum.repos.d/rpmforge.repo"
