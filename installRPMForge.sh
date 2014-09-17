@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Script to install and enable the latest RPMForge version for your RHEL/CentOS version and 
-architecture.
+# Script to install and enable the latest RPMForge version for your RHEL/CentOS version and architecture.
 # Author: Richard Reijmers
 
 # Some variables
