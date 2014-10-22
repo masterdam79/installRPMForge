@@ -10,15 +10,6 @@ RHELMAINVERSION=`cat /etc/redhat-release | awk -F' ' '{print $3}' | awk -F'.' '{
 ARCH=`uname -m`
 RPMFORGELATESTVERSIONFILE=`links -dump http://pkgs.repoforge.org/rpmforge-release/ | grep "el${RHELMAINVERSION}.rf.${ARCH}" | awk -F' ' '{ print $2 }' | grep "http" | awk -F'/' '{print $5}' | sort | tail -1`
 
-
-# If this is not RHEL or CentOS, get the hell out
-if [ ! -f ${RHELVERSIONFILE} ]
-then
-	ECHORED "This is not RHEL or CentOS, exiting"
-	exit
-fi
-
-
 # Some pretty colors
 ECHORED()       {
         echo -e "\e[1;31m${1}\e[0m"
@@ -35,6 +26,13 @@ ECHOGREEN()     {
 ECHOBLUE()      {
         echo -e "\e[1;34m${1}\e[0m"
 }
+
+# If this is not RHEL or CentOS, get the hell out
+if [ ! -f ${RHELVERSIONFILE} ]
+then
+        ECHORED "This is not RHEL or CentOS, exiting"
+        exit
+fi
 
 
 # Function to check if elinks is installed and install it if not present
