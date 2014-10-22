@@ -6,11 +6,9 @@
 # Some variables
 RPMFORGEREPOFILE="/etc/yum.repos.d/rpmforge.repo"
 RHELVERSIONFILE="/etc/redrat-release"
-RHELMAINVERSION=`cat /etc/redhat-release | awk -F' ' '{print $4}' | awk -F'.' '{print $1}'`
+RHELMAINVERSION=`cat /etc/redhat-release | awk -F' ' '{print $3}' | awk -F'.' '{print $1}'`
 ARCH=`uname -m`
-RPMFORGELATESTVERSIONFILE=`links -dump http://pkgs.repoforge.org/rpmforge-release/ | grep 
-"el${RHELMAINVERSION}.rf.${ARCH}" | awk -F' ' '{ print $2 }' | grep "http" | awk -F'/' '{print 
-$5}' | sort | tail -1`
+RPMFORGELATESTVERSIONFILE=`links -dump http://pkgs.repoforge.org/rpmforge-release/ | grep "el${RHELMAINVERSION}.rf.${ARCH}" | awk -F' ' '{ print $2 }' | grep "http" | awk -F'/' '{print $5}' | sort | tail -1`
 
 
 # If this is not RHEL or CentOS, get the hell out
@@ -67,8 +65,7 @@ checkRpmForgeOrInstall()        {
 # Function to install RPMForge
 installRpmForge()       {
         ECHOBLUE "Getting latest RPMForge repo"
-        wget http://pkgs.repoforge.org/rpmforge-release/${RPMFORGELATESTVERSIONFILE} -O 
-/root/${RPMFORGELATESTVERSIONFILE}
+        wget http://pkgs.repoforge.org/rpmforge-release/${RPMFORGELATESTVERSIONFILE} -O /root/${RPMFORGELATESTVERSIONFILE}
         ECHOBLUE "Installing latest RPMForge repo"
         yum -y localinstall ${RPMFORGELATESTVERSIONFILE}
 }
@@ -81,13 +78,10 @@ $2}'` -eq 1 ];
                 ECHOGREEN "First repository in repo file enabled"
         else
                 ECHORED "First repository in repo file disabled"
-                firstEnabledLine=`grep -n "enabled" /etc/yum.repos.d/rpmforge.repo | head -1 | 
-awk -F':' '{print $1}'`;
-                ECHOBLUE "Deleting first occurence of 'enabled' from ${RPMFORGEREPOFILE} from 
-line ${firstEnabledLine}"
+                firstEnabledLine=`grep -n "enabled" /etc/yum.repos.d/rpmforge.repo | head -1 | awk -F':' '{print $1}'`;
+                ECHOBLUE "Deleting first occurence of 'enabled' from ${RPMFORGEREPOFILE} from line ${firstEnabledLine}"
                 sed -i "${firstEnabledLine}d" ${RPMFORGEREPOFILE};
-                ECHOBLUE "Inserting 'enabled = 1' in ${RPMFORGEREPOFILE} on line 
-${firstEnabledLine}"
+                ECHOBLUE "Inserting 'enabled = 1' in ${RPMFORGEREPOFILE} on line ${firstEnabledLine}"
                 sed -i "${firstEnabledLine}ienabled = 1" ${RPMFORGEREPOFILE};
         fi
 }
