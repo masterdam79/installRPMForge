@@ -65,7 +65,7 @@ installRpmForge()       {
         ECHOBLUE "Getting latest RPMForge repo"
         wget http://pkgs.repoforge.org/rpmforge-release/${RPMFORGELATESTVERSIONFILE} -O /root/${RPMFORGELATESTVERSIONFILE}
         ECHOBLUE "Installing latest RPMForge repo"
-        yum -y localinstall ${RPMFORGELATESTVERSIONFILE}
+        yum -y localinstall /root/${RPMFORGELATESTVERSIONFILE}
 }
 
 #function to check if the repo file's first repository has been enabled or another
