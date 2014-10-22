@@ -98,6 +98,6 @@ checkElinksInstalledOrInstall
 
 checkRpmForgeOrInstall
 
-checkRpmForgeIncludePkgs
+#checkRpmForgeIncludePkgs
 
 
