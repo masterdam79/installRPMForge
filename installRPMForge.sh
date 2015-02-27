@@ -6,7 +6,7 @@
 # Some variables
 RPMFORGEREPOFILE="/etc/yum.repos.d/rpmforge.repo"
 RHELVERSIONFILE="/etc/redhat-release"
-RHELMAINVERSION=`cat /etc/redhat-release | awk -F' ' '{print $3}' | awk -F'.' '{print $1}'`
+RHELMAINVERSION=`egrep -o "[0-9]" /etc/redhat-release | head -1`
 ARCH=`uname -m`
 RPMFORGELATESTVERSIONFILE=`links -dump http://pkgs.repoforge.org/rpmforge-release/ | grep "el${RHELMAINVERSION}.rf.${ARCH}" | awk -F' ' '{ print $2 }' | grep "http" | awk -F'/' '{print $5}' | sort | tail -1`
 
