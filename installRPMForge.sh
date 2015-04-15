@@ -3,6 +3,12 @@
 # Script to install and enable the latest RPMForge version for your RHEL/CentOS version and architecture.
 # Author: Richard Reijmers
 
+# Check if elinks is installed, else install
+if [ `rpm -qa | grep elinks | wc -l` -eq 0 ];
+then
+        yum -y install elinks
+fi
+
 # Some variables
 RPMFORGEREPOFILE="/etc/yum.repos.d/rpmforge.repo"
 RHELVERSIONFILE="/etc/redhat-release"
@@ -35,14 +41,6 @@ then
 fi
 
 
-# Function to check if elinks is installed and install it if not present
-checkElinksInstalledOrInstall() {
-        if [ `rpm -qa | grep elinks | wc -l` -eq 0 ];
-        then
-                yum -y install elinks
-        fi
-}
-
 # Function to check if RPMForge repo is installed
 checkRpmForgeOrInstall()        {
         if [ `rpm -qa | grep rpmforge | wc -l` -gt 0 ];
@@ -56,13 +54,13 @@ checkRpmForgeOrInstall()        {
                 ECHORED "RPMForge repo not installed";
 
                 installRpmForge
-
+                checkRpmForgeFirstRepo
         fi
 }
 
 # Function to install RPMForge
 installRpmForge()       {
-        ECHOBLUE "Getting latest RPMForge repo"
+        ECHOBLUE "Getting latest RPMForge repo from http://pkgs.repoforge.org/rpmforge-release/${RPMFORGELATESTVERSIONFILE}"
         wget http://pkgs.repoforge.org/rpmforge-release/${RPMFORGELATESTVERSIONFILE} -O /root/${RPMFORGELATESTVERSIONFILE}
         ECHOBLUE "Installing latest RPMForge repo"
         yum -y localinstall /root/${RPMFORGELATESTVERSIONFILE}
@@ -86,7 +84,6 @@ $2}'` -eq 1 ];
 
 
 # Call da functionz
-checkElinksInstalledOrInstall
 
 checkRpmForgeOrInstall
 
