@@ -68,8 +68,7 @@ installRpmForge()       {
 
 #function to check if the repo file's first repository has been enabled or another
 checkRpmForgeFirstRepo()        {
-        if [ `grep "enabled" /etc/yum.repos.d/rpmforge.repo | head -1 | awk -F' = ' '{print 
-$2}'` -eq 1 ];
+        if [ `grep "enabled" /etc/yum.repos.d/rpmforge.repo | head -1 | awk -F' = ' '{print $2}'` -eq 1 ];
         then
                 ECHOGREEN "First repository in repo file enabled"
         else
